@@ -1,25 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch
+} from "react-router-dom";
 import './App.css';
+import { routes } from './config/routes';
+import { PrivateRoutes } from "./containers/PrivateRoutes";
+import { PublicRoutes } from './containers/PublicRoutes';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Switch>
+        {Object.keys(routes).map(key => {
+          const value = routes[key];
+          const { isPrivate } = value;
+          const SelectedRoute = isPrivate ? <PrivateRoutes {...value} key={key} /> : <PublicRoutes {...value} key={key} />
+          return SelectedRoute
+        })}
+        <Route path="*">
+          <h2>404</h2>
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 
