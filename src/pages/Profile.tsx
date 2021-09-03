@@ -1,6 +1,9 @@
+import { useState } from "react"
 import { BottomActivityBar } from "../components/BottomActivityBar"
-import { Navbar } from "../components/Navbar"
+import { Logo } from "../components/Logo"
+import { Navbar, NavItem } from "../components/Navbar"
 import { ProfileGrid } from "../components/ProfileGrid"
+import { Username } from "../components/Username"
 import { chunk } from "../utils/helpers"
 
 const images = [
@@ -21,10 +24,21 @@ const columns = chunk({
     size: 2
 })
 const Profile = () => {
+    const [showNavbar, setShowNavbar] = useState(true)
     return <div
         className="text-white w-screen h-screen overflow-y-auto overflow-x-hidden"
     >
-        <Navbar />
+        <Navbar
+            visible={showNavbar}
+            toggleVisiblity={() => setShowNavbar(!showNavbar)}
+        >
+            <NavItem to="/">
+                <Logo />
+            </NavItem>
+            <NavItem to="/useer">
+                <Username />
+            </NavItem>
+        </Navbar>
         <ProfileGrid
             columns={columns}
         />
