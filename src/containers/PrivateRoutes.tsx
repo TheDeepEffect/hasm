@@ -1,5 +1,10 @@
 import { Route, RouteProps } from "react-router-dom"
+import { AddPost } from "../components/AddPost"
+import { Store } from "../Store"
 
 export const PrivateRoutes = (props: RouteProps) => {
-    return <Route {...props} />
+    return <Store>
+        <AddPost />
+        <Route {...props} />
+    </Store>
 }

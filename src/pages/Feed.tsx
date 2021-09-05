@@ -8,6 +8,7 @@ import { Navbar, NavItem } from "../components/Navbar"
 
 
 const images = [
+    "https://wallpaperaccess.com/full/271965.jpg",
     "https://images.ctfassets.net/hrltx12pl8hq/3Q0QDN9wYXdNcxqwhzJQzm/b3a92e16b58cc63c5ede83a1728c9490/LOHP_Makers_FT_hero.jpg?fit=fill&w=800&h=450",
     "https://assets-global.website-files.com/6005fac27a49a9cd477afb63/60576840e7d265198541a372_bavassano_homepage_gp.jpg",
     "https://cdn.britannica.com/67/102267-050-FCC426F5/Town-Banff-Alberta-Canada.jpg",

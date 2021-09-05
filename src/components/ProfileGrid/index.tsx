@@ -21,7 +21,7 @@ export const ProfileGrid = (props: IProfileGridProps) => {
                     >
                         <img src={image} alt={`post-${i}`}
                             loading="lazy"
-                            className="w-full rounded-md cursor-pointer transition duration-500 ease-linear transform hover:-translate-y-2 hover:translate-x-2 images"
+                            className="w-full h-full object-contain  rounded-md cursor-pointer transition duration-500 ease-linear transform hover:-translate-y-2 hover:translate-x-2 images"
                         />
                     </div>
                 })}
