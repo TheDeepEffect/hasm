@@ -7,17 +7,26 @@ import { Username } from "../Username";
 import { routesConfig } from "../../config/routesConfig";
 import { Button } from "../Button";
 import { AddPostButton } from "../AddPostButton";
+import { useStore } from "../../utils/Hooks/useStore";
 
 export const BottomActivityBar = () => {
-  const [isShowBar, setIsShowBar] = useState(true);
   const [isShowComments, setIsShowComments] = useState(false);
   const { path } = useRouteMatch();
+  const { state, dispatch } = useStore();
+  const {
+    bottomActivityBar: { visible },
+  } = state;
+  console.log(state);
 
   const handleOnBottombarClick = () => {
     if (isShowComments) {
       setIsShowComments((state) => !state);
     }
-    setIsShowBar((state) => !state);
+    dispatch({ type: "TOGGLE_BOTTOM_ACTIVITY_BAR" });
+  };
+
+  const handleOnEditProfileClick = () => {
+    dispatch({ type: "TOGGLE_EDIT_PROFILE_DIALOGUE" });
   };
 
   if (path === routesConfig.profile.path) {
@@ -29,7 +38,7 @@ export const BottomActivityBar = () => {
         ></div>
         <div
           className={`${
-            isShowBar ? "flex" : "hidden"
+            visible ? "flex" : "hidden"
           } flex-col items-center  md:flex-row  justify-between  bg-gray-900 w-full bg-opacity-50 p-3`}
         >
           <div className='flex flex-col items-center justify-center mb-2'>
@@ -42,7 +51,7 @@ export const BottomActivityBar = () => {
             <span>400</span>
           </div>
           <div className='w-full md:w-1/4 text-center'>
-            <Button>Edit Profile</Button>
+            <Button onClick={handleOnEditProfileClick}>Edit Profile</Button>
           </div>
         </div>
       </div>
@@ -56,7 +65,7 @@ export const BottomActivityBar = () => {
       ></div>
       <div
         className={`${
-          isShowBar ? "flex" : "hidden"
+          visible ? "flex" : "hidden"
         } flex-col items-center  md:flex-row  justify-between  bg-gray-900 w-full bg-opacity-50 p-3`}
       >
         <div className='flex w-full  md:w-1/12 justify-around'>
