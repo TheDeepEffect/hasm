@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useReducer } from "react";
-import { getLocalStorage, setLocalStorage } from "../utils/helpers";
+import { getLocalStorage, setLocalStorage } from "../../utils/helpers";
 
 type IStoreProps = {
   children: ReactNode;

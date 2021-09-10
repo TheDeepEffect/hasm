@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { useStore } from "../../utils/Hooks/useStore";
+import { useStore } from "../../utils/hooks/useStore";
 import { NavItem } from "./NavItem";
 
 type INavbarProps = {

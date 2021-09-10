@@ -1,9 +1,27 @@
+import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "../components/Button";
 import { Input } from "../components/Input";
-const src =
-  "https://a1cf74336522e87f135f-2f21ace9a6cf0052456644b80fa06d4f.ssl.cf2.rackcdn.com/images/characters_opt/p-naruto-naruto.jpg";
+
 const SignUp = () => {
+  const [imageFile, setImageFile] = useState<File | null>(null);
+
+  const handleOnImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e?.target?.files?.[0];
+    if (file) {
+      setImageFile(file);
+    } else {
+      setImageFile(null);
+    }
+  };
+  const imagePreview = useMemo<string>(() => {
+    if (imageFile) {
+      const filePrivew = URL.createObjectURL(imageFile);
+      return filePrivew;
+    }
+    return "";
+  }, [imageFile]);
+
   return (
     <div className='h-full w-full flex flex-col justify-between items-center py-5'>
       <h1 className='text-4xl font-bold text-center'>Sign Up</h1>
@@ -13,13 +31,20 @@ const SignUp = () => {
           e.preventDefault();
         }}
       >
-        <label className='cursor-pointer mb-3'>
+        <label className='cursor-pointer mb-3  ring-2 ring-red-500 w-36 h-36 rounded-full  flex items-center justify-center'>
           <img
-            className='object-cover w-24 h-24  rounded-full ring-2 ring-red-500'
-            src={src}
+            className={`object-cover rounded-full  ${
+              imagePreview ? "w-full h-full" : ""
+            }`}
+            src={imagePreview}
             alt=''
           />
-          <Input type='file' className='hidden' />
+          <Input
+            type='file'
+            className='hidden z-20'
+            accept='image/png, image/jpeg'
+            onChange={handleOnImageChange}
+          />
         </label>
         <Input type='text' placeholder='Name' />
         <Input type='text' placeholder='Username' />

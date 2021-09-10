@@ -1,10 +1,10 @@
 import { useContext } from "react"
-import { Context } from "../../Store"
+import { Context } from "../../contexts/store"
 
 export const useStore = () => {
     const context = useContext(Context);
     if (context === undefined) {
-        throw new Error('useCount must be used within a CountProvider')
+        throw new Error('useStore  must be used within a StoreProvider')
     }
     return context
 }

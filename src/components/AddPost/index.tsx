@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { AiOutlineCloseCircle } from "react-icons/ai";
-import { useStore } from "../../utils/Hooks/useStore";
+import { useStore } from "../../utils/hooks/useStore";
 import { Button } from "../Button";
 import { Input } from "../Input";
 
