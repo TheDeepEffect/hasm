@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import { RiLogoutBoxLine } from "react-icons/ri";
+import { Redirect } from "react-router";
+import { routesConfig } from "../../config/routesConfig";
 import { useLogout } from "../../utils/hooks/useLogout";
 import { useStore } from "../../utils/hooks/useStore";
 import { Button } from "../Button";
@@ -8,7 +10,7 @@ import { Input } from "../Input";
 
 export const EditProfile = () => {
   const { state, dispatch } = useStore();
-  const { logout, loading } = useLogout();
+  const { logout, loading, error } = useLogout();
 
   const {
     EditProfile: { visible },
@@ -30,6 +32,18 @@ export const EditProfile = () => {
   const handleOnLogOutClick = () => {
     logout();
   };
+
+  useEffect(() => {
+    return () => {
+      if (visible) {
+        handleOnCloseClick();
+      }
+    };
+  }, []);
+
+  if (error) {
+    return <Redirect to={routesConfig.login.path} />;
+  }
   return (
     <div
       className={`${

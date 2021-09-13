@@ -13,14 +13,13 @@ export const useLogout = (props: IUseLogoutProps = {}) => {
     const [logout, { loading, error, data }] = useMutation<logout>(LOG_OUT,
         {
             onCompleted: (data: logout) => {
-                if (data?.logout?.__typename === "LogoutSuccess") {
-                    setCurrentUser({
-                        expiresAt: "",
-                        user: null,
-                    });
-                    onCompleted()
-                }
-            }
+                setCurrentUser({
+                    expiresAt: "",
+                    user: null,
+                });
+                onCompleted();
+            },
+            errorPolicy: "all"
         }
     );
     return { logout, loading, error, data }

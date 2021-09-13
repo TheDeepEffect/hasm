@@ -37,21 +37,29 @@ export const AddPost = () => {
         <div className='w-full h-full flex flex-col items-center justify-around  p-2'>
           <div className='text-4xl'>Add Post</div>
           <form className='flex flex-col items-center justify-around h-full w-full'>
-            <label className='cursor-pointer mb-3 ring-2 ring-red-500 h-2/4 w-4/6 md:w-3/6  flex items-center justify-center'>
-              {image ? "" : "Click here to add image"}
-              <img
-                className={`max-h-screen max-w-screen object-contain ${
-                  image ? "w-5/6 h-5/6" : ""
-                }`}
-                src={image}
-                alt=''
-              />
-              <Input
-                type='file'
-                className='hidden z-20'
-                onChange={handleOnImageChange}
-              />
-            </label>
+            <div className='mb-3 ring-2 ring-red-500 h-2/4 w-4/6 md:w-3/6'>
+              <label className='cursor-pointer'>
+                {image ? (
+                  ""
+                ) : (
+                  <p className='flex items-center justify-center w-full h-full'>
+                    Click here to add image
+                  </p>
+                )}
+                <img
+                  className={`max-h-screen max-w-screen object-contain ${
+                    image ? "w-5/6 h-5/6" : ""
+                  }`}
+                  src={image}
+                  alt=''
+                />
+                <Input
+                  type='file'
+                  className='hidden z-20'
+                  onChange={handleOnImageChange}
+                />
+              </label>
+            </div>
             <textarea
               className='h-1/4 w-3/6 text-black'
               placeholder='Description...'

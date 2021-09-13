@@ -5,8 +5,9 @@ import { useAuth } from "../utils/hooks/useAuth";
 import { CloudinaryContext } from "cloudinary-react";
 export const PrivateRoutes = (props: RouteProps) => {
   const { isAuthenticated } = useAuth();
+  const isAuthenticatedVar = isAuthenticated();
 
-  if (!isAuthenticated()) {
+  if (!isAuthenticatedVar) {
     return <Redirect to='/login' />;
   }
   return (
