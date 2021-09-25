@@ -1,48 +1,48 @@
 .nav-button {
-  height: 100%;
-  width: 10vw;
-  display: inline-flex;
-  align-items: center;
-  opacity: 0;
-  font-size: 2rem;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.75);
-  padding: 2rem;
-  cursor: pointer;
+    height: 100%;
+    width: 10vw;
+    display: inline-flex;
+    align-items: center;
+    opacity: 0;
+    font-size: 2rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.75);
+    padding: 2rem;
+    cursor: pointer;
 }
 .next {
-  right: 0%;
-  justify-content: flex-end;
+    right: 0%;
+    justify-content: flex-end;
 }
 .previous {
-  left: 0%;
-  justify-content: flex-start;
+    left: 0%;
+    justify-content: flex-start;
 }
 .next-hover {
-  min-width: 20vw;
-  height: 100%;
-  position: fixed;
-  right: 0%;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  z-index: 5;
-  top: 0%;
+    min-width: 20vw;
+    height: 100%;
+    position: fixed;
+    right: 0%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    z-index: 5;
+    top: 0%;
 }
 .next-hover:hover .nav-button {
-  opacity: 1;
+    opacity: 1;
 }
 .previous-hover {
-  min-width: 20vw;
-  height: 100%;
-  position: fixed;
-  left: 0%;
-  top: 0%;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  z-index: 5;
+    min-width: 20vw;
+    height: 100%;
+    position: fixed;
+    left: 0%;
+    top: 0%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    z-index: 5;
 }
 .previous-hover:hover .nav-button {
-  opacity: 1;
+    opacity: 1;
 }
