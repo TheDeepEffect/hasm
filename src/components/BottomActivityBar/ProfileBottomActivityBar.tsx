@@ -1,15 +1,18 @@
-import { useStore } from '../../utils/hooks/useStore'
-import { AddPostButton } from '../AddPostButton'
-import { Button } from '../Button'
+import { useStore } from '../../utils/hooks/useStore';
+import { AddPostButton } from '../AddPostButton';
+import { Button } from '../Button';
 
 export const ProfileBottomActivityBar = () => {
-    const { state, toggleEditProfile } = useStore()
+    const { state, toggleEditProfile } = useStore();
     const {
         bottomActivityBar: { visible },
-    } = state
+        EditProfile,
+    } = state;
     const handleOnEditProfileClick = () => {
-        toggleEditProfile()
-    }
+        if (!EditProfile.visible) {
+            toggleEditProfile();
+        }
+    };
     return (
         <div
             className={`${
@@ -29,5 +32,5 @@ export const ProfileBottomActivityBar = () => {
                 <Button onClick={handleOnEditProfileClick}>Edit Profile</Button>
             </div>
         </div>
-    )
-}
+    );
+};

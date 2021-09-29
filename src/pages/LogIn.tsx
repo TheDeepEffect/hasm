@@ -1,60 +1,60 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { Button } from '../components/Button'
-import { Input } from '../components/Input'
-import { IValidState } from '../types'
-import { useLogin } from '../utils/hooks/useLogin'
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Button } from '../components/Button';
+import { Input } from '../components/Input';
+import { IValidState } from '../types';
+import { useLogin } from '../utils/hooks/useLogin';
 
 const LogIn = () => {
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
     const [validState, setValidState] = useState<IValidState>({
         username: { valid: true, message: '' },
         password: { valid: true, message: '' },
-    })
-    const { login, loading } = useLogin()
+    });
+    const { login, loading } = useLogin();
 
     const handleOnUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setValidState((state) => ({
             ...state,
             username: { valid: true, message: '' },
-        }))
-        setUsername(e.target.value.replaceAll(' ', ''))
-    }
+        }));
+        setUsername(e.target.value.replaceAll(' ', ''));
+    };
     const handleOnPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setValidState((state) => ({
             ...state,
             password: { valid: true, message: '' },
-        }))
-        setPassword(e.target.value)
-    }
+        }));
+        setPassword(e.target.value);
+    };
 
     const isLoginFormValid = () => {
         if (!username) {
             setValidState((state) => ({
                 ...state,
                 username: { valid: false, message: 'Username is required' },
-            }))
-            return false
+            }));
+            return false;
         }
         if (!password) {
             setValidState((state) => ({
                 ...state,
                 password: { valid: false, message: 'Password is required' },
-            }))
-            return false
+            }));
+            return false;
         }
-        return true
-    }
+        return true;
+    };
 
     const handleOnLoginFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
+        e.preventDefault();
         if (isLoginFormValid()) {
             login({
                 variables: { loginUsername: username, loginPassword: password },
-            })
+            });
         }
-    }
+    };
 
     return (
         <div className=" h-full w-full flex flex-col justify-between items-center py-5">
@@ -87,6 +87,6 @@ const LogIn = () => {
                 Sign Up instead?
             </Link>
         </div>
-    )
-}
-export default LogIn
+    );
+};
+export default LogIn;

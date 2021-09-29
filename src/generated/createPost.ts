@@ -8,49 +8,52 @@
 // ====================================================
 
 export interface createPost_createPost_author {
-    __typename: 'User'
-    username: string | null
-    profile_pic: string | null
+  __typename: "User";
+  username: string | null;
+  profile_pic: string | null;
 }
 
 export interface createPost_createPost_likes_user {
-    __typename: 'User'
-    username: string | null
+  __typename: "User";
+  username: string | null;
 }
 
 export interface createPost_createPost_likes {
-    __typename: 'Like'
-    user: createPost_createPost_likes_user | null
+  __typename: "Like";
+  id: string | null;
+  user: createPost_createPost_likes_user | null;
 }
 
 export interface createPost_createPost_comments_user {
-    __typename: 'User'
-    username: string | null
+  __typename: "User";
+  username: string | null;
 }
 
 export interface createPost_createPost_comments {
-    __typename: 'Comment'
-    content: string | null
-    user: createPost_createPost_comments_user | null
+  __typename: "Comment";
+  id: string | null;
+  content: string | null;
+  user: createPost_createPost_comments_user | null;
 }
 
 export interface createPost_createPost {
-    __typename: 'Post'
-    id: string | null
-    url: string | null
-    description: string | null
-    isPrivate: boolean | null
-    author: createPost_createPost_author | null
-    likes: (createPost_createPost_likes | null)[] | null
-    comments: (createPost_createPost_comments | null)[] | null
+  __typename: "Post";
+  id: string | null;
+  url: string | null;
+  description: string | null;
+  isPrivate: boolean | null;
+  createdAt: any | null;
+  author: createPost_createPost_author | null;
+  likes: (createPost_createPost_likes | null)[] | null;
+  comments: (createPost_createPost_comments | null)[] | null;
 }
 
 export interface createPost {
-    createPost: createPost_createPost | null
+  createPost: createPost_createPost | null;
 }
 
 export interface createPostVariables {
-    createPostUrl: string
-    createPostIsPrivate?: boolean | null
-    createPostDescription?: string | null
+  createPostUrl: string;
+  createPostIsPrivate?: boolean | null;
+  createPostDescription?: string | null;
 }

@@ -1,4 +1,4 @@
-import gql from 'graphql-tag'
+import gql from 'graphql-tag';
 
 export const FEED = gql`
     query Feed($feedSkip: Int, $feedTake: Int) {
@@ -7,16 +7,19 @@ export const FEED = gql`
             url
             description
             isPrivate
+            createdAt
             author {
                 username
                 profile_pic
             }
             likes {
+                id
                 user {
                     username
                 }
             }
             comments {
+                id
                 content
                 user {
                     username
@@ -24,4 +27,35 @@ export const FEED = gql`
             }
         }
     }
-`
+`;
+
+export const CURRENT_USER = gql`
+    query currentUser($currentUserUsername: String!) {
+        currentUser(username: $currentUserUsername) {
+            name
+            email
+            username
+            profile_pic
+            posts {
+                id
+                url
+                isPrivate
+                createdAt
+            }
+            followers {
+                id
+                followByUser {
+                    id
+                    username
+                }
+            }
+            following {
+                id
+                followToUser {
+                    id
+                    username
+                }
+            }
+        }
+    }
+`;

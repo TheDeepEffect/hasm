@@ -1,7 +1,7 @@
-import { Link } from 'react-router-dom'
-import { Button } from '../components/Button'
-import { Input } from '../components/Input'
-import { useSignup } from '../utils/hooks/useSignup'
+import { Link } from 'react-router-dom';
+import { Button } from '../components/Button';
+import { Input } from '../components/Input';
+import { useSignup } from '../utils/hooks/useSignup';
 
 const SignUp = () => {
     const {
@@ -12,8 +12,8 @@ const SignUp = () => {
         errorState,
         setImageState,
         setErrorState,
-    } = useSignup()
-    const { name, email, confirmPassword, password, username } = errorState
+    } = useSignup();
+    const { name, email, confirmPassword, password, username } = errorState;
     return (
         <div className="h-full w-full flex flex-col justify-between items-center py-5">
             <h1 className="text-4xl font-bold text-center">Sign Up</h1>
@@ -24,9 +24,9 @@ const SignUp = () => {
                 <label className="cursor-pointer mb-3  ring-2 ring-red-500 w-36 h-36 rounded-full  flex items-center justify-center">
                     <img
                         className={`object-cover rounded-full  ${
-                            state['imagePreview'] ? 'w-full h-full' : ''
+                            state.imagePreview ? 'w-full h-full' : ''
                         }`}
-                        src={state['imagePreview']}
+                        src={state.imagePreview}
                         alt=""
                     />
                     <Input
@@ -39,16 +39,16 @@ const SignUp = () => {
                 <Input
                     type="text"
                     placeholder="Name"
-                    value={state['name']}
+                    value={state.name}
                     onChange={(e) => {
-                        setState('name', e.target.value)
+                        setState('name', e.target.value);
                         setErrorState((state) => ({
                             ...state,
                             name: {
                                 valid: true,
                                 message: '',
                             },
-                        }))
+                        }));
                     }}
                     valid={name.valid}
                     message={name.message}
@@ -56,16 +56,16 @@ const SignUp = () => {
                 <Input
                     type="text"
                     placeholder="Username"
-                    value={state['username']}
+                    value={state.username}
                     onChange={(e) => {
-                        setState('username', e.target.value)
+                        setState('username', e.target.value);
                         setErrorState((state) => ({
                             ...state,
                             username: {
                                 valid: true,
                                 message: '',
                             },
-                        }))
+                        }));
                     }}
                     valid={username.valid}
                     message={username.message}
@@ -73,16 +73,16 @@ const SignUp = () => {
                 <Input
                     type="text"
                     placeholder="E-mail"
-                    value={state['email']}
+                    value={state.email}
                     onChange={(e) => {
-                        setState('email', e.target.value)
+                        setState('email', e.target.value);
                         setErrorState((state) => ({
                             ...state,
                             email: {
                                 valid: true,
                                 message: '',
                             },
-                        }))
+                        }));
                     }}
                     valid={email.valid}
                     message={email.message}
@@ -90,16 +90,16 @@ const SignUp = () => {
                 <Input
                     type="password"
                     placeholder="Password"
-                    value={state['password']}
+                    value={state.password}
                     onChange={(e) => {
-                        setState('password', e.target.value)
+                        setState('password', e.target.value);
                         setErrorState((state) => ({
                             ...state,
                             password: {
                                 valid: true,
                                 message: '',
                             },
-                        }))
+                        }));
                     }}
                     valid={password.valid}
                     message={password.message}
@@ -107,16 +107,16 @@ const SignUp = () => {
                 <Input
                     type="password"
                     placeholder="Confirm Password"
-                    value={state['confirmPassword']}
+                    value={state.confirmPassword}
                     onChange={(e) => {
-                        setState('confirmPassword', e.target.value)
+                        setState('confirmPassword', e.target.value);
                         setErrorState((state) => ({
                             ...state,
                             confirmPassword: {
                                 valid: true,
                                 message: '',
                             },
-                        }))
+                        }));
                     }}
                     valid={confirmPassword.valid}
                     message={confirmPassword.message}
@@ -129,7 +129,7 @@ const SignUp = () => {
                 Log In instead?
             </Link>
         </div>
-    )
-}
+    );
+};
 
-export default SignUp
+export default SignUp;

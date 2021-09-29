@@ -1,64 +1,65 @@
-import { useMutation } from '@apollo/client'
-import { useCallback, useEffect, useState } from 'react'
-import { useHistory } from 'react-router'
-import { CREATE_POST } from '../resolvers/mutations'
-import { createPost, createPostVariables } from './../../generated/createPost'
-import { useStore } from './useStore'
-import { FEED } from './../resolvers/queries'
-import { fetchImage } from '../helpers'
-import { Feed } from '../../generated/Feed'
-import { IAddPostKey, IAddPostState, IAddPostValue } from '../../types'
+import { useMutation } from '@apollo/client';
+import { useCallback, useEffect, useState } from 'react';
+import { useHistory } from 'react-router';
+import { CREATE_POST } from '../resolvers/mutations';
+import { createPost, createPostVariables } from './../../generated/createPost';
+import { useStore } from './useStore';
+import { CURRENT_USER, FEED } from './../resolvers/queries';
+import { parseSinglePost } from '../helpers';
+import { Feed } from '../../generated/Feed';
+import { IAddPostKey, IAddPostState, IAddPostValue } from '../../types';
+import { currentUser, currentUserVariables } from '../../generated/currentUser';
 
 export const useAddPost = () => {
-    const { state: store, toggleAddPost } = useStore()
-    const history = useHistory()
+    const { state: store, toggleAddPost, setCurrentPost } = useStore();
+    const history = useHistory();
     const {
         AddPost: { visible },
-    } = store
+    } = store;
 
     const [state, setLocalState] = useState<IAddPostState>({
         imageFile: '',
         imagePreview: '',
         description: '',
         isPrivate: false,
-    })
+    });
 
     const handleOnCloseClick = useCallback(() => {
-        toggleAddPost()
+        toggleAddPost();
         setLocalState({
             imageFile: '',
             imagePreview: '',
             description: '',
             isPrivate: false,
-        })
-    }, [toggleAddPost])
+        });
+    }, [toggleAddPost]);
 
     const handleOnImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e?.target?.files?.[0]
+        const file = e?.target?.files?.[0];
         if (file) {
-            const reader = new FileReader()
-            reader.readAsDataURL(file)
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
             // @ts-ignore
-            reader.onload = (img) => setState('imageFile', img.target?.result)
-            setState('imagePreview', URL.createObjectURL(file))
+            reader.onload = (img) => setState('imageFile', img.target?.result);
+            setState('imagePreview', URL.createObjectURL(file));
         }
-    }
+    };
 
     const handleEscape = useCallback(
         (event) => {
             if (event.keyCode === 27) {
-                handleOnCloseClick()
+                handleOnCloseClick();
             }
         },
         [handleOnCloseClick]
-    )
+    );
 
     useEffect(() => {
-        if (visible) document.addEventListener('keydown', handleEscape, false)
+        if (visible) document.addEventListener('keydown', handleEscape, false);
         return () => {
-            document.removeEventListener('keydown', handleEscape, false)
-        }
-    }, [handleEscape, visible])
+            document.removeEventListener('keydown', handleEscape, false);
+        };
+    }, [handleEscape, visible]);
 
     const [onCreatePost, { loading, data, error }] = useMutation<
         createPost,
@@ -67,54 +68,77 @@ export const useAddPost = () => {
         update: async (cache, { data }) => {
             const existingPosts = cache.readQuery<Feed>({
                 query: FEED,
-            })
-            let postImage, profilePic
-            const url = data?.createPost?.url
-            const profile_pic = data?.createPost?.author?.profile_pic
-            if (url) {
-                postImage = await fetchImage(url)
-            }
-            if (profile_pic) {
-                profilePic = await fetchImage(profile_pic)
-            }
-            const newPost = {
-                ...data?.createPost,
-                url: postImage ? postImage : url,
-                author: {
-                    ...data?.createPost?.author,
-                    profile_pic: profilePic ? profilePic : profile_pic,
-                },
-            }
-            if (existingPosts && data?.createPost) {
+            });
+            if (data?.createPost && existingPosts) {
+                const newPost = await parseSinglePost(data.createPost);
                 cache.writeQuery({
                     query: FEED,
                     data: {
                         // @ts-ignore
                         feed: [{ ...newPost }, ...existingPosts?.feed],
                     },
-                })
+                });
+                const currentUser = cache.readQuery<
+                    currentUser,
+                    currentUserVariables
+                >({
+                    query: CURRENT_USER,
+                    variables: {
+                        currentUserUsername:
+                            data.createPost.author?.username || '',
+                    },
+                });
+                if (currentUser?.currentUser?.posts?.length && newPost) {
+                    cache.writeQuery<currentUser, currentUserVariables>({
+                        query: CURRENT_USER,
+                        variables: {
+                            currentUserUsername:
+                                data.createPost.author?.username || '',
+                        },
+                        data: {
+                            currentUser: {
+                                ...currentUser?.currentUser,
+                                posts: [
+                                    // @ts-ignore
+                                    ...currentUser.currentUser.posts,
+                                    // @ts-ignore
+                                    {
+                                        __typename: newPost.__typename,
+                                        id: newPost.id,
+                                        url: newPost.url,
+                                        isPrivate: newPost.url,
+                                        createdAt: newPost.createdAt,
+                                    },
+                                ],
+                            },
+                        },
+                    });
+                }
             }
         },
-        onCompleted: () => handleOnCloseClick(),
+        onCompleted: () => {
+            handleOnCloseClick();
+            setCurrentPost(0);
+        },
         onError: (err) => {
             if (err.message === 'Unauthenticated User') {
-                history.push('/login')
+                history.push('/login');
             }
         },
-    })
+    });
 
     const setState = (key: IAddPostKey, value: IAddPostValue) => {
         setLocalState((state) => ({
             ...state,
             [key]: value,
-        }))
-    }
+        }));
+    };
     const validateData = () => {
         if (!state?.imageFile) {
-            return false
+            return false;
         }
-        return true
-    }
+        return true;
+    };
     const handleOnAddPost = () => {
         if (validateData()) {
             onCreatePost({
@@ -123,9 +147,9 @@ export const useAddPost = () => {
                     createPostIsPrivate: state?.isPrivate,
                     createPostDescription: state?.description,
                 },
-            })
+            });
         }
-    }
+    };
     return {
         handleOnAddPost,
         data,
@@ -136,5 +160,5 @@ export const useAddPost = () => {
         visible,
         handleOnImageChange,
         handleOnCloseClick,
-    }
-}
+    };
+};

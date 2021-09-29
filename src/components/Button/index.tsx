@@ -4,7 +4,7 @@ export const Button = (
         HTMLButtonElement
     >
 ) => {
-    const { children, ...rest } = props
+    const { children, ...rest } = props;
     return (
         <button
             className="disabled:opacity-50 disabled:cursor-auto disabled:bg-transparent  rounded-md px-3 py-3 shadow-md text-white bg-transparent border-2 border-pink-600  hover:bg-pink-600 my-3 w-3/6"
@@ -12,5 +12,5 @@ export const Button = (
         >
             {children}
         </button>
-    )
-}
+    );
+};

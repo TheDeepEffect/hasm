@@ -1,19 +1,19 @@
-import { RouteComponentProps } from 'react-router-dom'
+import { RouteComponentProps } from 'react-router-dom';
 export type IRoutesConfig = {
     [key: string]: {
-        id: string
-        name: string
-        description?: string
-        path: string
-        path_string: (params: any) => string
-        exact: boolean
-        isPrivate: boolean
-        isStatic?: boolean
+        id: string;
+        name: string;
+        description?: string;
+        path: string;
+        path_string: (params: any) => string;
+        exact: boolean;
+        isPrivate: boolean;
+        isStatic?: boolean;
         component?:
             | React.ComponentType<RouteComponentProps<any>>
-            | React.ComponentType<any>
-    }
-}
+            | React.ComponentType<any>;
+    };
+};
 
 /**
  * @description the aim to create this config is to have
@@ -31,7 +31,7 @@ export const routesConfig: IRoutesConfig = {
         description: 'Log in page',
         path: '/login',
         path_string: () => {
-            return `/login`
+            return `/login`;
         },
         exact: true,
         isPrivate: false,
@@ -43,7 +43,7 @@ export const routesConfig: IRoutesConfig = {
         description: 'Sign Up page',
         path: '/signup',
         path_string: () => {
-            return `/signup`
+            return `/signup`;
         },
         exact: true,
         isPrivate: false,
@@ -55,7 +55,7 @@ export const routesConfig: IRoutesConfig = {
         description: 'Feed page',
         path: '/',
         path_string: () => {
-            return `/`
+            return `/`;
         },
         exact: true,
         isPrivate: true,
@@ -67,7 +67,7 @@ export const routesConfig: IRoutesConfig = {
         description: 'Single post page',
         path: '/post/:postId',
         path_string: ({ postId }) => {
-            return `/post/${postId}`
+            return `/post/${postId}`;
         },
         exact: true,
         isPrivate: true,
@@ -79,10 +79,10 @@ export const routesConfig: IRoutesConfig = {
         description: 'User profile page',
         path: '/:username',
         path_string: ({ username }) => {
-            return `/${username}`
+            return `/${username}`;
         },
         exact: true,
         isPrivate: true,
         component: undefined,
     },
-}
+};

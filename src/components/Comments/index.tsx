@@ -1,8 +1,9 @@
-import { CommentInput } from './CommentInput'
-import { SingleComment } from './SingleComment'
+import { useFeedNavigation } from '../../utils/hooks/useFeedNavigation';
+import { CommentInput } from './CommentInput';
+import { SingleComment } from './SingleComment';
 
 export const Comments = ({ isVisible }: { isVisible: boolean }) => {
-    const comments = [SingleComment, SingleComment, SingleComment]
+    const { post } = useFeedNavigation();
     return (
         <>
             <div
@@ -12,24 +13,16 @@ export const Comments = ({ isVisible }: { isVisible: boolean }) => {
             >
                 <div className="flex justify-center items-center w-full mb-2">
                     <article className="text-justify max-w-prose">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation ullamco laboris nisi ut aliquip ex ea
-                        commodo consequat. Duis aute irure dolor in
-                        reprehenderit in voluptate velit esse cillum dolore eu
-                        fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-                        non proident, sunt in culpa qui officia deserunt mollit
-                        anim id est laborum.
+                        {post?.description ? post.description : ''}
                     </article>
                 </div>
                 <CommentInput />
-                {comments.map((Comp) => {
-                    return <Comp />
+                {post?.comments?.map((comment) => {
+                    return (
+                        <SingleComment key={comment?.id} comment={comment} />
+                    );
                 })}
             </div>
         </>
-    )
-}
+    );
+};

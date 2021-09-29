@@ -1,4 +1,4 @@
-import gql from 'graphql-tag'
+import gql from 'graphql-tag';
 
 export const LOG_IN = gql`
     mutation login($loginUsername: String!, $loginPassword: String!) {
@@ -18,7 +18,7 @@ export const LOG_IN = gql`
             }
         }
     }
-`
+`;
 
 export const LOG_OUT = gql`
     mutation logout {
@@ -31,7 +31,7 @@ export const LOG_OUT = gql`
             }
         }
     }
-`
+`;
 
 export const SIGN_UP = gql`
     mutation signup(
@@ -63,7 +63,7 @@ export const SIGN_UP = gql`
             }
         }
     }
-`
+`;
 
 export const CREATE_POST = gql`
     mutation createPost(
@@ -80,16 +80,19 @@ export const CREATE_POST = gql`
             url
             description
             isPrivate
+            createdAt
             author {
                 username
                 profile_pic
             }
             likes {
+                id
                 user {
                     username
                 }
             }
             comments {
+                id
                 content
                 user {
                     username
@@ -97,4 +100,37 @@ export const CREATE_POST = gql`
             }
         }
     }
-`
+`;
+export const LIKE = gql`
+    mutation LikeMutation($likePostId: String!) {
+        like(postId: $likePostId) {
+            id
+            user {
+                username
+            }
+        }
+    }
+`;
+
+export const UNLIKE = gql`
+    mutation UnlikeMutation($unlikeId: String!) {
+        unlike(id: $unlikeId) {
+            id
+        }
+    }
+`;
+
+export const ADD_COMMENT = gql`
+    mutation addComment(
+        $addCommentContent: String!
+        $addCommentPostId: String!
+    ) {
+        addComment(content: $addCommentContent, postId: $addCommentPostId) {
+            id
+            content
+            user {
+                username
+            }
+        }
+    }
+`;

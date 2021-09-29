@@ -1,10 +1,10 @@
-import { IInputProps } from '../../types'
+import { IInputProps } from '../../types';
 
 export const Input = (props: IInputProps) => {
-    const { className, valid = true, message = '', ...rest } = props
-    const validPlaceholder = valid ? 'gray' : 'red'
-    const validBorder = valid ? 'blue' : 'red'
-    const invalidMessage = valid ? '' : message
+    const { className, valid = true, message = '', ...rest } = props;
+    const validPlaceholder = valid ? 'gray' : 'red';
+    const validBorder = valid ? 'blue' : 'red';
+    const invalidMessage = valid ? '' : message;
     return (
         <div className="w-full mb-3">
             <input
@@ -23,5 +23,5 @@ export const Input = (props: IInputProps) => {
                 ''
             )}
         </div>
-    )
-}
+    );
+};

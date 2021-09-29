@@ -1,48 +1,40 @@
-import { useEffect, useState } from 'react'
-import { AiOutlineCloseCircle } from 'react-icons/ai'
-import { RiLogoutBoxLine } from 'react-icons/ri'
-import { Redirect } from 'react-router'
-import { routesConfig } from '../../config/routesConfig'
-import { useLogout } from '../../utils/hooks/useLogout'
-import { useStore } from '../../utils/hooks/useStore'
-import { Button } from '../Button'
-import { Input } from '../Input'
+import { useEffect, useState } from 'react';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
+import { RiLogoutBoxLine } from 'react-icons/ri';
+import { Redirect } from 'react-router';
+import { routesConfig } from '../../config/routesConfig';
+import { useLogout } from '../../utils/hooks/useLogout';
+import { useStore } from '../../utils/hooks/useStore';
+import { Button } from '../Button';
+import { Input } from '../Input';
 
 export const EditProfile = () => {
-    const { state, toggleEditProfile } = useStore()
-    const { logout, loading, error } = useLogout()
+    const { state, toggleEditProfile } = useStore();
+    const { logout, loading, error } = useLogout();
 
     const {
         EditProfile: { visible },
-    } = state
+    } = state;
 
-    const [image, setImage] = useState('')
+    const [image, setImage] = useState('');
     const handleOnImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e?.target?.files?.[0]
+        const file = e?.target?.files?.[0];
         if (file) {
-            const filePrivew = URL.createObjectURL(file)
-            setImage(filePrivew)
+            const filePrivew = URL.createObjectURL(file);
+            setImage(filePrivew);
         }
-    }
+    };
 
     const handleOnCloseClick = () => {
-        toggleEditProfile()
-    }
+        toggleEditProfile();
+    };
 
     const handleOnLogOutClick = () => {
-        logout()
-    }
-
-    useEffect(() => {
-        return () => {
-            if (visible) {
-                handleOnCloseClick()
-            }
-        }
-    }, [])
+        logout();
+    };
 
     if (error) {
-        return <Redirect to={routesConfig.login.path} />
+        return <Redirect to={routesConfig.login.path} />;
     }
     return (
         <div
@@ -69,7 +61,7 @@ export const EditProfile = () => {
                     <form
                         className="sm:w-full lg:w-2/6 flex flex-col justify-center items-center text-black"
                         onSubmit={(e) => {
-                            e.preventDefault()
+                            e.preventDefault();
                         }}
                     >
                         <label className="cursor-pointer mb-3 ring-2 ring-red-500 w-36 h-36 rounded-full  flex items-center justify-center">
@@ -108,5 +100,5 @@ export const EditProfile = () => {
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};

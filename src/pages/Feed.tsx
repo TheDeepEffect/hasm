@@ -1,5 +1,5 @@
-import { FeedNavigationWrapper } from '../components/FeedNavigationWrapper'
-import { FeedWrapper } from '../components/FeedWrapper'
+import { FeedNavigationWrapper } from '../components/FeedNavigationWrapper';
+import { FeedWrapper } from '../components/FeedWrapper';
 
 const Feed = () => {
     return (
@@ -8,6 +8,6 @@ const Feed = () => {
                 <FeedWrapper />
             </FeedNavigationWrapper>
         </div>
-    )
-}
-export default Feed
+    );
+};
+export default Feed;

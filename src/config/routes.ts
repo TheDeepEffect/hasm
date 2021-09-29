@@ -1,10 +1,10 @@
-import React from 'react'
-import { routesConfig, IRoutesConfig } from './routesConfig'
+import React from 'react';
+import { routesConfig, IRoutesConfig } from './routesConfig';
 
-const Feed = React.lazy(() => import('../pages/Feed'))
-const LogIn = React.lazy(() => import('../pages/LogIn'))
-const Profile = React.lazy(() => import('../pages/Profile'))
-const SignUp = React.lazy(() => import('../pages/SignUp'))
+const Feed = React.lazy(() => import('../pages/Feed'));
+const LogIn = React.lazy(() => import('../pages/LogIn'));
+const Profile = React.lazy(() => import('../pages/Profile'));
+const SignUp = React.lazy(() => import('../pages/SignUp'));
 
 export const routes: IRoutesConfig = {
     [routesConfig.login.id]: {
@@ -27,4 +27,4 @@ export const routes: IRoutesConfig = {
         ...routesConfig.profile,
         component: Profile,
     },
-}
+};

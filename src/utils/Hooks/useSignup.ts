@@ -1,9 +1,10 @@
-import { useMutation } from '@apollo/client'
-import { useReducer, useState } from 'react'
-import { SIGN_UP } from '../resolvers/mutations'
-import { signup, signupVariables } from '../../generated/signup'
-import { useAuth } from './useAuth'
-import { IState, IReducer, IKey, IInputValue } from '../../types'
+import { useMutation } from '@apollo/client';
+import { useReducer, useState } from 'react';
+import { SIGN_UP } from '../resolvers/mutations';
+import { signup, signupVariables } from '../../generated/signup';
+import { useAuth } from './useAuth';
+import { IState, IReducer, IKey, IInputValue } from '../../types';
+import { fetchImage } from '../helpers';
 
 export const useSignup = () => {
     const [errorState, setErrorState] = useState({
@@ -27,7 +28,7 @@ export const useSignup = () => {
             valid: true,
             message: '',
         },
-    })
+    });
 
     const initialState: IState = {
         name: '',
@@ -37,102 +38,112 @@ export const useSignup = () => {
         confirmPassword: '',
         imageFile: null,
         imagePreview: '',
-    }
+    };
     const reducer: IReducer = (state, { type, payload }) => {
-        const { key, value } = payload
+        const { key, value } = payload;
         switch (type) {
             case 'SET_STATE':
                 return {
                     ...state,
                     [key]: value,
-                }
+                };
 
             default:
-                throw new Error(`Unhandled action type: ${type}`)
+                throw new Error(`Unhandled action type: ${type}`);
         }
-    }
+    };
 
-    const [state, dispatch] = useReducer(reducer, initialState)
+    const [state, dispatch] = useReducer(reducer, initialState);
 
-    const { setCurrentUser } = useAuth()
+    const { setCurrentUser } = useAuth();
     const [onSignUp, { loading, error, data }] = useMutation<
         signup,
         signupVariables
     >(SIGN_UP, {
-        onCompleted: (data: signup) => {
+        onCompleted: async (data: signup) => {
             if (data?.signup?.__typename === 'AuthPayload') {
-                setCurrentUser({
-                    expiresAt: data.signup.expiresAt || '',
-                    user: data.signup.user,
-                })
+                if (data.signup.user) {
+                    const user = data.signup.user;
+                    let profile_pic;
+                    if (data.signup.user.profile_pic) {
+                        profile_pic = await fetchImage(
+                            data.signup.user.profile_pic
+                        );
+                        user.profile_pic = profile_pic;
+                    }
+                    setCurrentUser({
+                        expiresAt: data.signup.expiresAt || '',
+                        user,
+                    });
+                }
             } else {
                 setCurrentUser({
                     expiresAt: '',
                     user: null,
-                })
+                });
             }
         },
-    })
+    });
 
     const setImageState = (e: IInputValue) => {
-        const file = e?.target?.files?.[0]
+        const file = e?.target?.files?.[0];
         if (file) {
-            const reader = new FileReader()
-            reader.readAsDataURL(file)
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
             // @ts-ignore
-            reader.onload = (img) => setState('imageFile', img.target?.result)
-            setState('imagePreview', URL.createObjectURL(file))
+            reader.onload = (img) => setState('imageFile', img.target?.result);
+            setState('imagePreview', URL.createObjectURL(file));
         }
-    }
+    };
 
     const setState = (key: IKey, value: string | null) => {
-        dispatch({ type: 'SET_STATE', payload: { key, value } })
-    }
+        dispatch({ type: 'SET_STATE', payload: { key, value } });
+    };
 
     const validateEmail = (email: string) => {
         const re =
-            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        return re.test(email.toLowerCase())
-    }
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email.toLowerCase());
+    };
 
     const validateUsername = (username: string) => {
-        const re = /^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$/
-        return re.test(username.toLowerCase())
-    }
+        const re = /^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$/;
+        return re.test(username.toLowerCase());
+    };
     const validatePassword = (password: string) => {
         const re =
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
-        return re.test(password)
-    }
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        return re.test(password);
+    };
     const validateData = () => {
-        const { name, username, email, password, confirmPassword } = state
+        const { name, username, email, password, confirmPassword } = state;
         if (!name) {
             setErrorState((state) => ({
                 ...state,
                 name: { valid: false, message: 'Name is required' },
-            }))
-            return false
+            }));
+            return false;
         }
         if (!username) {
             setErrorState((state) => ({
                 ...state,
                 username: { valid: false, message: 'Username is required' },
-            }))
-            return false
+            }));
+            return false;
         }
         if (!email) {
             setErrorState((state) => ({
                 ...state,
                 email: { valid: false, message: 'E-mail is required' },
-            }))
-            return false
+            }));
+            return false;
         }
         if (!password) {
             setErrorState((state) => ({
                 ...state,
                 password: { valid: false, message: 'Password is required' },
-            }))
-            return false
+            }));
+            return false;
         }
         if (!confirmPassword) {
             setErrorState((state) => ({
@@ -141,22 +152,22 @@ export const useSignup = () => {
                     valid: false,
                     message: 'Please re-enter your password',
                 },
-            }))
-            return false
+            }));
+            return false;
         }
         if (!validateUsername(username)) {
             setErrorState((state) => ({
                 ...state,
                 username: { valid: false, message: 'Enter valid username' },
-            }))
-            return false
+            }));
+            return false;
         }
         if (!validateEmail(email)) {
             setErrorState((state) => ({
                 ...state,
                 email: { valid: false, message: 'Enter valid email' },
-            }))
-            return false
+            }));
+            return false;
         }
         if (!validatePassword(password)) {
             setErrorState((state) => ({
@@ -166,8 +177,8 @@ export const useSignup = () => {
                     message:
                         'Password must be Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character',
                 },
-            }))
-            return false
+            }));
+            return false;
         }
         if (password !== confirmPassword) {
             setErrorState((state) => ({
@@ -177,15 +188,15 @@ export const useSignup = () => {
                     valid: false,
                     message: "Passwords doesn't match",
                 },
-            }))
-            return false
+            }));
+            return false;
         }
-        return true
-    }
+        return true;
+    };
 
     const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        const { name, username, email, password, imageFile } = state
+        e.preventDefault();
+        const { name, username, email, password, imageFile } = state;
 
         if (validateData()) {
             onSignUp({
@@ -196,9 +207,9 @@ export const useSignup = () => {
                     signupPassword: password,
                     signupProfilePic: imageFile,
                 },
-            })
+            });
         }
-    }
+    };
 
     return {
         state,
@@ -210,5 +221,5 @@ export const useSignup = () => {
         errorState,
         setErrorState,
         setImageState,
-    }
-}
+    };
+};

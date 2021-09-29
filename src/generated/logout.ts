@@ -8,19 +8,17 @@
 // ====================================================
 
 export interface logout_logout_LogoutSuccess {
-    __typename: 'LogoutSuccess'
-    message: string
+  __typename: "LogoutSuccess";
+  message: string;
 }
 
 export interface logout_logout_LogoutFailed {
-    __typename: 'LogoutFailed'
-    message: string
+  __typename: "LogoutFailed";
+  message: string;
 }
 
-export type logout_logout =
-    | logout_logout_LogoutSuccess
-    | logout_logout_LogoutFailed
+export type logout_logout = logout_logout_LogoutSuccess | logout_logout_LogoutFailed;
 
 export interface logout {
-    logout: logout_logout | null
+  logout: logout_logout | null;
 }

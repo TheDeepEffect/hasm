@@ -1,11 +1,11 @@
-import { Route, RouteProps, Redirect } from 'react-router-dom'
-import { Logo } from '../components/Logo'
-import { useAuth } from '../utils/hooks/useAuth'
+import { Route, RouteProps, Redirect } from 'react-router-dom';
+import { Logo } from '../components/Logo';
+import { useAuth } from '../utils/hooks/useAuth';
 
 export const PublicRoutes = (props: RouteProps) => {
-    const { isAuthenticated } = useAuth()
+    const { isAuthenticated } = useAuth();
     if (isAuthenticated()) {
-        return <Redirect to="/" />
+        return <Redirect to="/" />;
     }
     return (
         <div className="h-screen text-white flex flex-col items-center justify-center lg:p-20">
@@ -16,5 +16,5 @@ export const PublicRoutes = (props: RouteProps) => {
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};

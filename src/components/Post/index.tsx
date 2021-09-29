@@ -1,4 +1,4 @@
-import { IPost } from '../../types'
+import { IPost } from '../../types';
 
 export const Post = ({ image_url }: IPost) => {
     return (
@@ -13,5 +13,5 @@ export const Post = ({ image_url }: IPost) => {
                 src={image_url || ''}
             />
         </div>
-    )
-}
+    );
+};

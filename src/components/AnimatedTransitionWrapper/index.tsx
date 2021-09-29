@@ -1,15 +1,15 @@
-import { ReactNode } from 'react'
-import { Switch, useLocation } from 'react-router-dom'
-import { CSSTransition, TransitionGroup } from 'react-transition-group'
-import { Logo } from '../Logo'
-import './style.css'
+import { ReactNode } from 'react';
+import { Switch, useLocation } from 'react-router-dom';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import { Logo } from '../Logo';
+import './style.css';
 
 export const AnimatedTransitionWrapper = ({
     children,
 }: {
-    children: ReactNode
+    children: ReactNode;
 }) => {
-    const location = useLocation()
+    const location = useLocation();
 
     return (
         <div className="h-screen text-white flex flex-col items-center justify-center lg:p-20">
@@ -28,5 +28,5 @@ export const AnimatedTransitionWrapper = ({
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};

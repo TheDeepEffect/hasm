@@ -1,16 +1,16 @@
-import { INavbarProps } from '../../types'
-import { useStore } from '../../utils/hooks/useStore'
-import { NavItem } from './NavItem'
+import { INavbarProps } from '../../types';
+import { useStore } from '../../utils/hooks/useStore';
+import { NavItem } from './NavItem';
 
 const Navbar = (props: INavbarProps) => {
-    const { children } = props
-    const { state, toggleNavbar } = useStore()
+    const { children } = props;
+    const { state, toggleNavbar } = useStore();
     const {
         navbar: { visible },
-    } = state
+    } = state;
     const toggleVisiblity = () => {
-        toggleNavbar()
-    }
+        toggleNavbar();
+    };
     return (
         <div className="flex flex-col fixed w-full z-20">
             <nav
@@ -23,8 +23,8 @@ const Navbar = (props: INavbarProps) => {
             <div
                 className="h-2 w-full bg-gradient-to-r from-yellow-400  via-red-500 to-pink-500 cursor-pointer"
                 onClick={toggleVisiblity}
-            ></div>
+            />
         </div>
-    )
-}
-export { Navbar, NavItem }
+    );
+};
+export { Navbar, NavItem };

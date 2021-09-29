@@ -1,6 +1,6 @@
-import { IGET } from '../types'
+import { IGET } from '../types';
 
 export const GET = async ({ url, headers }: IGET) => {
-    const response = await fetch(url, { headers })
-    return response
-}
+    const response = await fetch(url, { headers });
+    return response;
+};

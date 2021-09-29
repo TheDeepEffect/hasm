@@ -1,18 +1,15 @@
-import { FaUserAstronaut } from 'react-icons/fa'
-import { useAuth } from '../../utils/hooks/useAuth'
-import { useFeedNavigation } from '../../utils/hooks/useFeedNavigation'
-import { useStore } from '../../utils/hooks/useStore'
-import { BottomActivityBar } from '../BottomActivityBar'
-import { FeedItem } from '../FeedItem'
-import { Logo } from '../Logo'
-import { Navbar, NavItem } from '../Navbar'
+import { FaUserAstronaut } from 'react-icons/fa';
+import { useAuth } from '../../utils/hooks/useAuth';
+import { useFeedNavigation } from '../../utils/hooks/useFeedNavigation';
+import { BottomActivityBar } from '../BottomActivityBar';
+import { FeedItem } from '../FeedItem';
+import { Logo } from '../Logo';
+import { Navbar, NavItem } from '../Navbar';
+import { NewPost } from '../NewPost';
 
 export const FeedWrapper = () => {
-    const { currentUser } = useAuth()
-    const {
-        state: { currentPost },
-    } = useStore()
-    const { data } = useFeedNavigation()
+    const { currentUser } = useAuth();
+    const { isNewPostAvailable, loadNewPosts, post } = useFeedNavigation();
     return (
         <>
             <Navbar>
@@ -23,8 +20,9 @@ export const FeedWrapper = () => {
                     <FaUserAstronaut size={32} />
                 </NavItem>
             </Navbar>
-            <FeedItem image_url={data?.feed?.[currentPost]?.url || ''} />
+            {isNewPostAvailable ? <NewPost loadNewPosts={loadNewPosts} /> : ''}
+            <FeedItem image_url={post?.url || ''} />
             <BottomActivityBar />
         </>
-    )
-}
+    );
+};

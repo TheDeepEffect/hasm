@@ -1,11 +1,11 @@
-import { useRef } from 'react'
-import { createPortal } from 'react-dom'
-import { AiOutlineCloseCircle } from 'react-icons/ai'
-import { useAddPost } from '../../utils/hooks/useAddPost'
-import { Button } from '../Button'
-import { Input } from '../Input'
+import { useRef } from 'react';
+import { createPortal } from 'react-dom';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
+import { useAddPost } from '../../utils/hooks/useAddPost';
+import { Button } from '../Button';
+import { Input } from '../Input';
 
-const dialogElement = document.getElementById('dialog-root')
+const dialogElement = document.getElementById('dialog-root');
 
 export const AddPost = () => {
     const {
@@ -16,8 +16,8 @@ export const AddPost = () => {
         visible,
         handleOnCloseClick,
         handleOnImageChange,
-    } = useAddPost()
-    const dialogRef = useRef<HTMLDivElement>(null)
+    } = useAddPost();
+    const dialogRef = useRef<HTMLDivElement>(null);
 
     return createPortal(
         visible ? (
@@ -43,8 +43,8 @@ export const AddPost = () => {
                         <form
                             className="flex flex-col items-center justify-around h-full w-full"
                             onSubmit={(e) => {
-                                e.preventDefault()
-                                handleOnAddPost()
+                                e.preventDefault();
+                                handleOnAddPost();
                             }}
                         >
                             <div className="mb-3 ring-2 ring-red-500 h-2/4 w-4/6 md:w-3/6">
@@ -79,7 +79,7 @@ export const AddPost = () => {
                                 onChange={(
                                     e: React.ChangeEvent<HTMLTextAreaElement>
                                 ) => {
-                                    setState('description', e.target.value)
+                                    setState('description', e.target.value);
                                 }}
                             />
                             <label className="flex items-center justify-center w-4/6 md:w-3/6">
@@ -91,7 +91,7 @@ export const AddPost = () => {
                                         setState(
                                             'isPrivate',
                                             !formState.isPrivate
-                                        )
+                                        );
                                     }}
                                 />
                                 Keep this post private
@@ -109,5 +109,5 @@ export const AddPost = () => {
         ) : null,
         // @ts-ignore
         dialogElement
-    )
-}
+    );
+};
